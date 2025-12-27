@@ -94,4 +94,20 @@ Cart operations
 Order creation
 PayPal sandbox payments
 Admin monitoring flows
+some screenshots of our project
+<img width="847" height="870" alt="Screenshot 2025-12-27 164946" src="https://github.com/user-attachments/assets/083b0ada-4403-4bb5-b076-592ce7ea6aed" />
+<img width="1289" height="777" alt="Screenshot 2025-12-27 165002" src="https://github.com/user-attachments/assets/9a0bc9ad-8256-4fe7-bcc7-fd6df7ba50e9" />
+<img width="1381" height="836" alt="Screenshot 2025-12-27 165011" src="https://github.com/user-attachments/assets/951d7d44-5d28-4d73-b024-66c707f1754f" />
+<img width="1474" height="870" alt="Screenshot 2025-12-27 165020" src="https://github.com/user-attachments/assets/48f2c110-d626-4739-8443-258ca7396c9c" />
+
+<img width="1424" height="870" alt="Screenshot 2025-12-27 165029" src="https://github.com/user-attachments/assets/5effbcdf-8221-4e12-9d0d-5a8a908ef931" />
+<img width="1469" height="779" alt="Screenshot 2025-12-27 165054" src="https://github.com/user-attachments/assets/6f3791b1-4dd2-4ae4-b7a3-b21c6cb8746b" />
+<img width="1499" height="900" alt="Screenshot 2025-12-27 165037" src="https://github.com/user-attachments/assets/a499b1f3-dd52-4ddc-b371-ccb9bf6f6aee"<img width="1476" height="918" alt="Screenshot 2025-12-27 165129" src="https://github.com/user-attachments/assets/7ffb53ef-5ac0-4c63-9d79-7038b2f303de" />
+ />
+<img width="1295" height="758" alt="Screenshot 2025-12-27 165141" src="https://github.com/user-attachments/assets/83cfc35d-f078-4566-ba87-168fc9fceeac"<img width="1238" height="803" alt="Screenshot 2025-12-27 165213" src="https://github.com/user-attachments/assets/025d02a1-c303-46fc-9722-aeea69b54045" />
+ /><img width="1058" height="903" alt="Screenshot 2025-12-27 165722" src="https://github.com/user-attachments/assets/17487121-c7d8-43d0-bc14-9b52d918b25c" />
+<img width="1135" height="903" alt="Screenshot 2025-12-27 165735" src="https://github.com/user-attachments/assets/8ca7dcf7-5e80-4466-981d-01ef45fbb851" />
+<img width="1271" height="844" alt="Screenshot 2025-12-27 165856" src="https://github.com/user-attachments/assets/9e531a0b-ed50-4424-a4ba-420edeb01e30" />
+<img width="1325" height="758" alt="Screenshot 2025-12-27 165904" src="https://github.com/user-attachments/assets/9162afd0-96bd-42cd-84aa-0156ae4c4d3f" />
+<img width="1146" height="772" alt="Screenshot 2025-12-27 165912" src="https://github.com/user-attachments/assets/3e719872-d66d-48e9-ba7c-53aa4b5a9268" />
 
