@@ -5,37 +5,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Cart</title>
+    <title>Your Cart | Zyra</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
     <style>
         body {
-            background: #f4f6fb;
+            min-height: 100vh;
+            margin: 0;
+            background: radial-gradient(1200px at top left, #0f172a, #020617);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #e5e7eb;
         }
+
         .cart-box {
-            max-width: 900px;
-            margin: 40px auto;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-            padding: 24px 32px 32px;
+            max-width: 1000px;
+            margin: 60px auto;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            padding: 28px 36px 32px;
         }
+
         .cart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
+
+        .cart-header h3 {
+            margin: 0;
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .cart-header small {
+            color: #94a3b8;
+        }
+
         .btn-primary {
-            background-color: #2563eb;
-            border-color: #2563eb;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            border: none;
+            border-radius: 999px;
+            font-weight: 500;
+            padding: 8px 20px;
         }
+
         .btn-primary:hover {
-            background-color: #1d4ed8;
-            border-color: #1d4ed8;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        }
+
+        .btn-outline-secondary,
+        .btn-outline-danger {
+            border-radius: 999px;
+        }
+
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-color: #e5e7eb;
+            --bs-table-border-color: rgba(255,255,255,0.08);
+        }
+
+        thead th {
+            color: #cbd5f5;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .text-muted {
+            color: #94a3b8 !important;
+        }
+
+        .text-primary {
+            color: #60a5fa !important;
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fecaca;
+            border-radius: 12px;
+        }
+
+        .remove-link {
+            color: #f87171;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .remove-link:hover {
+            text-decoration: underline;
+            color: #ef4444;
+        }
+
+        .total-box {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.12);
         }
     </style>
 </head>
@@ -46,27 +119,26 @@
     <!-- HEADER -->
     <div class="cart-header">
         <div>
-            <h3 class="mb-0">Your Cart</h3>
-            <small class="text-muted">
+            <h3>Your Cart</h3>
+            <small>
                 <c:choose>
                     <c:when test="${itemCount > 0}">
                         ${itemCount} item(s) in cart
                     </c:when>
-                    <c:otherwise>No items in cart.</c:otherwise>
+                    <c:otherwise>No items in cart</c:otherwise>
                 </c:choose>
             </small>
         </div>
 
-        <div>
+        <div class="d-flex gap-2">
             <a class="btn btn-outline-secondary btn-sm"
-   href="${pageContext.request.contextPath}/products">
-    Continue Shopping
-</a>
-
+               href="${pageContext.request.contextPath}/products">
+                Continue Shopping
+            </a>
 
             <c:if test="${itemCount > 0}">
                 <form action="${pageContext.request.contextPath}/buyer/cart"
-                      method="post" style="display:inline;">
+                      method="post">
                     <input type="hidden" name="action" value="clear">
                     <button type="submit" class="btn btn-outline-danger btn-sm">
                         Clear Cart
@@ -76,7 +148,7 @@
         </div>
     </div>
 
-    <!-- ERROR MESSAGE -->
+    <!-- ERROR -->
     <c:if test="${not empty sessionScope.cartError}">
         <div class="alert alert-danger py-2">
             ${sessionScope.cartError}
@@ -84,44 +156,40 @@
         <c:remove var="cartError" scope="session"/>
     </c:if>
 
-    <!-- EMPTY CART -->
+    <!-- EMPTY -->
     <c:if test="${itemCount == 0}">
         <p class="text-muted mb-0">Your cart is empty.</p>
     </c:if>
 
-    <!-- CART TABLE -->
+    <!-- TABLE -->
     <c:if test="${itemCount > 0}">
         <table class="table align-middle">
             <thead>
             <tr>
                 <th>Product</th>
-                <th style="width: 120px;">Quantity</th>
-                <th style="width: 120px;">Price</th>
-                <th style="width: 120px;">Subtotal</th>
-                <th style="width: 80px;"></th>
+                <th width="120">Quantity</th>
+                <th width="120">Price</th>
+                <th width="120">Subtotal</th>
+                <th width="80"></th>
             </tr>
             </thead>
-
             <tbody>
             <c:forEach var="item" items="${cartItems}">
                 <tr>
                     <td>
-                        <b>${item.productName}</b><br/>
+                        <strong>${item.productName}</strong><br>
                         <small class="text-muted">${item.category}</small>
                     </td>
-
                     <td>${item.quantity}</td>
-
-                    <!-- FIXED -->
                     <td>₹ ${item.productPrice}</td>
                     <td>₹ ${item.subtotal}</td>
-
                     <td>
                         <form action="${pageContext.request.contextPath}/buyer/cart"
                               method="post">
                             <input type="hidden" name="action" value="remove">
                             <input type="hidden" name="cartId" value="${item.cartId}">
-                            <button type="submit" class="btn btn-link text-danger p-0">
+                            <button type="submit"
+                                    class="btn btn-link remove-link p-0">
                                 Remove
                             </button>
                         </form>
@@ -131,12 +199,16 @@
             </tbody>
         </table>
 
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <h5 class="mb-0">Total: <span class="text-primary">₹ ${totalAmount}</span></h5>
+        <div class="d-flex justify-content-between align-items-center total-box">
+            <h5 class="mb-0">
+                Total:
+                <span class="text-primary">₹ ${totalAmount}</span>
+            </h5>
 
             <a href="${pageContext.request.contextPath}/buyer/checkout"
-   class="btn btn-primary">Proceed to Checkout</a>
-
+               class="btn btn-primary">
+                Proceed to Checkout
+            </a>
         </div>
     </c:if>
 

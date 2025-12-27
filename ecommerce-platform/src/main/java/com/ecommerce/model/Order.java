@@ -5,25 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    // Private fields
+
+    // Core fields
     private int orderId;
     private int buyerId;
+
+    // NOTE: Stored as orderDate internally
     private Timestamp orderDate;
+
     private double totalAmount;
     private String status; // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
     private String shippingAddress;
     private String paymentMethod;
 
-    // Additional fields for display
+    // Display / helper fields
     private String buyerName;
-    private List<OrderItem> orderItems; // List of items in this order
+    private List<OrderItem> orderItems;
 
-    // Default Constructor
+    // Default constructor
     public Order() {
         this.orderItems = new ArrayList<>();
     }
 
-    // Constructor without orderId (for creating new order)
+    // Constructor (new order)
     public Order(int buyerId, double totalAmount, String shippingAddress, String paymentMethod) {
         this.buyerId = buyerId;
         this.totalAmount = totalAmount;
@@ -33,8 +37,8 @@ public class Order {
         this.orderItems = new ArrayList<>();
     }
 
-    // Constructor with all fields
-    public Order(int orderId, int buyerId, Timestamp orderDate, double totalAmount, 
+    // Full constructor
+    public Order(int orderId, int buyerId, Timestamp orderDate, double totalAmount,
                  String status, String shippingAddress, String paymentMethod) {
         this.orderId = orderId;
         this.buyerId = buyerId;
@@ -46,7 +50,10 @@ public class Order {
         this.orderItems = new ArrayList<>();
     }
 
-    // Getters and Setters
+    // ======================
+    // GETTERS & SETTERS
+    // ======================
+
     public int getOrderId() {
         return orderId;
     }
@@ -63,12 +70,18 @@ public class Order {
         this.buyerId = buyerId;
     }
 
+    // Original getter
     public Timestamp getOrderDate() {
         return orderDate;
     }
 
     public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
+    }
+
+    // ✅ ALIAS FOR JSP / UI (THIS FIXES YOUR ERROR)
+    public Timestamp getCreatedAt() {
+        return orderDate;
     }
 
     public double getTotalAmount() {
@@ -119,16 +132,17 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    // Utility method to add item to order
+    // Utility
     public void addOrderItem(OrderItem item) {
         this.orderItems.add(item);
     }
 
-    // toString method
     @Override
     public String toString() {
-        return "Order [orderId=" + orderId + ", buyerId=" + buyerId + 
-               ", totalAmount=" + totalAmount + ", status=" + status + 
-               ", orderDate=" + orderDate + "]";
+        return "Order [orderId=" + orderId +
+                ", buyerId=" + buyerId +
+                ", totalAmount=" + totalAmount +
+                ", status=" + status +
+                ", orderDate=" + orderDate + "]";
     }
 }

@@ -38,7 +38,7 @@ public interface ProductDAO {
      * @return List of all active products
      */
     List<Product> getAllProducts();
-    
+    boolean updateProductStatus(int productId, boolean active);
     /**
      * Get products by seller
      * @param sellerId Seller ID

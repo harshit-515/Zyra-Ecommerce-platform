@@ -12,63 +12,80 @@
 
     <style>
         body {
-            background: #f5f7fb;
+            min-height: 100vh;
+            background: radial-gradient(circle at top,
+                    #0b1220,
+                    #020617 70%);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #e5e7eb;
         }
 
         .page-wrapper {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 50px auto;
         }
 
+        /* Header */
         .page-header {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 18px 24px;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 22px 26px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .page-title {
             font-size: 1.6rem;
             font-weight: 600;
             margin: 0;
-            color: #111827;
+            color: #f8fafc;
         }
 
         .page-subtitle {
             margin: 4px 0 0;
-            color: #6b7280;
+            color: #94a3b8;
             font-size: 0.95rem;
         }
 
         .btn-logout {
             border-radius: 999px;
             font-weight: 500;
+            color: #e5e7eb;
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
         }
 
         /* Dashboard tiles */
-
         .card-tile {
-            border-radius: 18px;
-            border: none;
-            background: #ffffff;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-            transition: transform .15s ease, box-shadow .15s ease;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: linear-gradient(
+                    180deg,
+                    rgba(15, 23, 42, 0.9),
+                    rgba(2, 6, 23, 0.9)
+            );
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+            transition: transform .18s ease, box-shadow .18s ease;
             height: 100%;
         }
 
         .card-tile:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 26px 65px rgba(37, 99, 235, 0.25);
         }
 
         .card-icon {
-            width: 52px;
-            height: 52px;
+            width: 54px;
+            height: 54px;
             border-radius: 18px;
             display: flex;
             align-items: center;
@@ -77,20 +94,31 @@
             margin-bottom: 14px;
         }
 
-        .icon-browse { background: #eff6ff; color: #2563eb; }
-        .icon-cart   { background: #ecfdf5; color: #16a34a; }
-        .icon-orders { background: #fff7ed; color: #f97316; }
+        .icon-browse {
+            background: rgba(37, 99, 235, 0.15);
+            color: #60a5fa;
+        }
+
+        .icon-cart {
+            background: rgba(22, 163, 74, 0.15);
+            color: #4ade80;
+        }
+
+        .icon-orders {
+            background: rgba(249, 115, 22, 0.15);
+            color: #fb923c;
+        }
 
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 6px;
-            color: #111827;
+            color: #f8fafc;
         }
 
         .card-text {
             font-size: 0.92rem;
-            color: #6b7280;
+            color: #9ca3af;
         }
 
         a.tile-link {
@@ -108,7 +136,10 @@
         <div>
             <h1 class="page-title">Buyer Dashboard</h1>
             <p class="page-subtitle">
-                Welcome, <strong><c:out value="${sessionScope.currentUser.username}" /></strong>
+                Welcome,
+                <strong>
+                    <c:out value="${sessionScope.currentUser.username}" />
+                </strong>
             </p>
         </div>
 
@@ -127,9 +158,7 @@
                href="${pageContext.request.contextPath}/products">
                 <div class="card card-tile">
                     <div class="card-body">
-                        <div class="card-icon icon-browse">
-                            🛒
-                        </div>
+                        <div class="card-icon icon-browse">🛒</div>
                         <h5 class="card-title">Browse Products</h5>
                         <p class="card-text">
                             Explore items from all sellers and add them to your cart.
@@ -145,9 +174,7 @@
                href="${pageContext.request.contextPath}/buyer/cart">
                 <div class="card card-tile">
                     <div class="card-body">
-                        <div class="card-icon icon-cart">
-                            🛍️
-                        </div>
+                        <div class="card-icon icon-cart">🛍️</div>
                         <h5 class="card-title">My Cart</h5>
                         <p class="card-text">
                             View and manage items currently in your shopping cart.
@@ -163,9 +190,7 @@
                href="${pageContext.request.contextPath}/buyer/orders">
                 <div class="card card-tile">
                     <div class="card-body">
-                        <div class="card-icon icon-orders">
-                            📦
-                        </div>
+                        <div class="card-icon icon-orders">📦</div>
                         <h5 class="card-title">My Orders</h5>
                         <p class="card-text">
                             Track your past orders and delivery status in one place.

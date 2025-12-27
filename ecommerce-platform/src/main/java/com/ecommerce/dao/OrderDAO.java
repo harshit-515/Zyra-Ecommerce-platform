@@ -13,7 +13,9 @@ public interface OrderDAO {
      * @return Order ID if successful, -1 otherwise
      */
     int createOrder(Order order, List<OrderItem> orderItems);
-    
+    double getTotalRevenue();
+    List<Order> getRecentOrders(int limit);
+
     /**
      * Get order by ID
      * @param orderId Order ID

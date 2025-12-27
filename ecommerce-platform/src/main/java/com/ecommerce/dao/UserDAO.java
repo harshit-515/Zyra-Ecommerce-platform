@@ -11,7 +11,7 @@ public interface UserDAO {
      * @return true if successful, false otherwise
      */
     boolean registerUser(User user);
-    
+
     /**
      * Authenticate user login
      * @param username Username
@@ -46,7 +46,9 @@ public interface UserDAO {
      * @return List of all users
      */
     List<User> getAllUsers();
-    
+    public boolean updateUserStatus(int userId, boolean status);
+
+
     /**
      * Get users by role
      * @param role Role (ADMIN, SELLER, BUYER)

@@ -1,112 +1,184 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Zyra – Login</title>
 
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
         body {
-            background: #f3f6fc;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #020617);
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            font-family: 'Segoe UI', sans-serif;
+            justify-content: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
         }
-        .login-container {
-            width: 420px;
-            background: #fff;
-            padding: 0;
-            border-radius: 12px;
-            box-shadow: 0px 4px 16px rgba(0,0,0,0.1);
-            overflow: hidden;
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 18px;
+            padding: 36px 32px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
         }
-        .login-header {
-            background: #0d6efd;
-            color: white;
-            padding: 20px;
+
+        .brand {
             text-align: center;
-            font-size: 26px;
-            font-weight: 600;
+            margin-bottom: 26px;
         }
+
+        .brand h1 {
+            font-weight: 800;
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+
+        .brand p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
         .form-control {
             height: 48px;
-            border-radius: 8px;
+            border-radius: 10px;
         }
-        .btn-login {
-            background: #0d6efd;
-            color: white;
-            width: 100%;
+
+        .btn-primary {
+            background-color: #2563eb;
+            border-color: #2563eb;
             height: 48px;
-            margin-top: 10px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 500;
+            font-weight: 600;
+            border-radius: 10px;
         }
-        .btn-login:hover {
-            background: #0b5ed7;
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            border-color: #1d4ed8;
         }
-        .error-box {
-            background: #ffe5e7;
-            border-left: 4px solid #ff3b47;
-            padding: 10px 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            color: #d60018;
-            font-size: 15px;
+
+        .divider {
+            text-align: center;
+            margin: 22px 0;
+            position: relative;
+            color: #94a3b8;
+            font-size: 13px;
         }
-        a {
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            width: 40%;
+            background: #e5e7eb;
+            position: absolute;
+            top: 50%;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .create-link {
+            text-align: center;
+        }
+
+        .create-link a {
             text-decoration: none;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .create-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 18px;
         }
     </style>
 </head>
-
 <body>
 
-<div class="login-container">
+<div class="login-card">
 
-    <div class="login-header">Login</div>
+    <!-- Brand -->
+    <div class="brand">
+        <h1>Zyra</h1>
+        <p>Your modern online shopping destination</p>
+    </div>
 
-    <div class="p-4">
+    <!-- Error message -->
+    <%
+        String error = (String) request.getAttribute("errorMessage");
+        if (error != null) {
+    %>
+        <div class="error"><%= error %></div>
+    <%
+        }
+    %>
 
-        <!-- Show error message if login failed -->
-        <c:if test="${not empty errorMessage}">
-            <div class="error-box">
-                ${errorMessage}
-            </div>
-        </c:if>
+    <!-- Login Form -->
+    <form action="<%= request.getContextPath() %>/login" method="post">
+        <div class="mb-3">
+            <input type="text"
+                   name="username"
+                   class="form-control"
+                   placeholder="Username"
+                   required>
+        </div>
 
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <div class="mb-3">
+            <input type="password"
+                   name="password"
+                   class="form-control"
+                   placeholder="Password"
+                   required>
+        </div>
 
-            <!-- Username -->
-            <label class="form-label">Username</label>
-            <input type="text" name="username" class="form-control"
-                   placeholder="Enter username"
-                   value="${param.username}">
+        <button type="submit" class="btn btn-primary w-100">
+            Sign In
+        </button>
+    </form>
 
-            <!-- Password -->
-            <label class="form-label mt-3">Password</label>
-            <input type="password" name="password" class="form-control"
-                   placeholder="Enter password">
+    <!-- Divider -->
+    <div class="divider">OR</div>
 
-            <!-- Login button -->
-            <button type="submit" class="btn btn-login mt-4">Login</button>
-        </form>
+    <!-- Create Account -->
+    <div class="create-link">
+        New to Zyra?
+        <a href="<%= request.getContextPath() %>/register">
+            Create a new account
+        </a>
+    </div>
 
-        <div class="text-center mt-3">
-    New User?
-    <a href="${pageContext.request.contextPath}/register">
-        Register here
-    </a>
-</div>
-
-
+    <div class="footer-text">
+        © 2025 Zyra Store • Secure Login
     </div>
 </div>
 

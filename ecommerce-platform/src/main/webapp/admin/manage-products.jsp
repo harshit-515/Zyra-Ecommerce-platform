@@ -1,48 +1,90 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Product Catalogue - Admin</title>
-    <style>
-        body {
-            background: #f3f4f6;
-            font-family: Arial, sans-serif;
-            padding: 40px;
-        }
-        .box {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            max-width: 700px;
-            margin: auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        h2 { color: #111827; }
-        p  { color: #6b7280; font-size: 1.05rem; }
-        a.back {
-            margin-top: 20px;
-            display: inline-block;
-            background: #2563eb;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-        }
-    </style>
+<title>Product Catalogue</title>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+<style>
+body {
+    background: radial-gradient(circle at top, #0f1b3d, #050714);
+    color: #e5e7eb;
+}
+.table {
+    background: rgba(15,23,42,0.95);
+    border-radius: 14px;
+}
+thead th {
+    background: #020617;
+    color: #c7d2fe;
+    font-size: .75rem;
+    text-transform: uppercase;
+}
+</style>
 </head>
+
 <body>
+<div class="container mt-5">
 
-<div class="box">
-    <h2>Product Catalogue</h2>
-    <p>Admin will be able to view, verify and remove products.</p>
-    <p style="font-weight:bold; font-size:1.2rem;">Coming Soon...</p>
+<h3 class="mb-3">📦 Product Catalogue</h3>
+<p class="text-muted">All products across the platform</p>
 
-    <a class="back" href="${pageContext.request.contextPath}/admin/admin-dashboard.jsp">
-        ⟵ Back to Dashboard
-    </a>
+<table class="table table-borderless align-middle">
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Seller</th>
+    <th>Category</th>
+    <th>Price (₹)</th>
+    <th>Stock</th>
+    <th>Status</th>
+    <th class="text-end">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<c:forEach var="p" items="${products}">
+<tr>
+    <td>${p.productName}</td>
+    <td>${p.sellerName}</td>
+    <td>${p.category}</td>
+    <td>${p.price}</td>
+    <td>${p.stockQuantity}</td>
+    <td>
+        <c:choose>
+            <c:when test="${p.active}">
+                <span class="text-success">Active</span>
+            </c:when>
+            <c:otherwise>
+                <span class="text-danger">Inactive</span>
+            </c:otherwise>
+        </c:choose>
+    </td>
+
+    <td class="text-end">
+        <form method="post"
+              action="${pageContext.request.contextPath}/admin/products">
+            <input type="hidden" name="productId" value="${p.productId}">
+            <input type="hidden" name="active" value="${!p.active}">
+            <button class="btn btn-sm
+                ${p.active ? 'btn-outline-danger' : 'btn-outline-success'}">
+                ${p.active ? 'Disable' : 'Enable'}
+            </button>
+        </form>
+    </td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
+
+<a href="${pageContext.request.contextPath}/admin/dashboard.jsp"
+   class="text-light text-decoration-none">
+← Back to Dashboard
+</a>
+
 </div>
-
 </body>
 </html>

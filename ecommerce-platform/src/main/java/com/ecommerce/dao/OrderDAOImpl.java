@@ -412,6 +412,47 @@ public class OrderDAOImpl implements OrderDAO {
             }
         }
     }
+    @Override
+    public double getTotalRevenue() {
+        String sql = "SELECT SUM(total_amount) FROM orders WHERE status != 'CANCELLED'";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) return rs.getDouble(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Order> getRecentOrders(int limit) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.*, u.full_name FROM orders o " +
+                     "JOIN users u ON o.buyer_id = u.user_id " +
+                     "ORDER BY o.order_date DESC LIMIT ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Order o = new Order();
+                o.setOrderId(rs.getInt("order_id"));
+                o.setBuyerName(rs.getString("full_name"));
+                o.setTotalAmount(rs.getDouble("total_amount"));
+                o.setStatus(rs.getString("status"));
+                o.setOrderDate(rs.getTimestamp("order_date"));
+                orders.add(o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
 
     @Override
     public List<Order> getOrdersByStatus(String status) {

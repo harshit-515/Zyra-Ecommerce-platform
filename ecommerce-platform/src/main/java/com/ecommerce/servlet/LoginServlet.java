@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+
 import com.ecommerce.dao.UserDAO;
 import com.ecommerce.dao.UserDAOImpl;
 import com.ecommerce.model.User;
+import org.mindrot.jbcrypt.BCrypt;   // ✅ ADD THIS
+
 @WebServlet("/login") 
 public class LoginServlet extends HttpServlet {
 
@@ -20,11 +23,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-
         userDAO = new UserDAOImpl();
         System.out.println("[LoginServlet] init() called – UserDAOImpl ready.");
     }
-
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -43,29 +44,27 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String enteredPassword = request.getParameter("password");
 
         System.out.println("[LoginServlet] Username: " + username);
-        System.out.println("[LoginServlet] Password received (length): "
-                + (password == null ? 0 : password.length()));
 
-        // 1) Empty field validation
+        // 1️⃣ Empty field validation
         if (username == null || username.trim().isEmpty()
-                || password == null || password.trim().isEmpty()) {
+                || enteredPassword == null || enteredPassword.trim().isEmpty()) {
 
             request.setAttribute("errorMessage",
                     "Username and password both required.");
-            // Wapas login.jsp par
             request.getRequestDispatcher("/login.jsp")
                    .forward(request, response);
             return;
         }
 
-        // 2) DB ke through authenticate
-        User user = userDAO.authenticateUser(username.trim(), password);
+        // 2️⃣ Fetch user by username ONLY
+        User user = userDAO.getUserByUsername(username.trim());
 
-        if (user == null) {
-            // 2a) FAIL → message dikhao
+        // 3️⃣ Validate password using bcrypt
+        if (user == null || !BCrypt.checkpw(enteredPassword, user.getPassword())) {
+
             System.out.println("[LoginServlet] Login FAILED for: " + username);
 
             request.setAttribute("errorMessage",
@@ -75,7 +74,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        // 2b) SUCCESS → session create karo
+        // 4️⃣ SUCCESS → create session
         System.out.println("[LoginServlet] Login SUCCESS for: "
                 + user.getUsername() + " (role = " + user.getRole() + ")");
 
@@ -83,8 +82,8 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("currentUser", user);
         session.setAttribute("role", user.getRole());
 
-        String role = user.getRole();  // "ADMIN" / "SELLER" / "BUYER"
-        String contextPath = request.getContextPath(); // /ecommerce-platform
+        String role = user.getRole();
+        String contextPath = request.getContextPath();
         String target;
 
         if ("ADMIN".equalsIgnoreCase(role)) {
@@ -92,7 +91,6 @@ public class LoginServlet extends HttpServlet {
         } else if ("SELLER".equalsIgnoreCase(role)) {
             target = contextPath + "/seller/dashboard.jsp";
         } else {
-            // default BUYER
             target = contextPath + "/buyer/dashboard.jsp";
         }
 
